@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().disable().csrf().disable().authorizeRequests()
 				// No need authentication. "/api/v1/**"
 				.antMatchers("/api/v1/admin/register", "/api/v1/admin/login", "/api/v1/admin/authenticationToken",
-						"/public/**", "/images/**")
+						"/public/**", "/getImage/**")
 				.permitAll()
 				// Need authentication.
 				.anyRequest().authenticated().and().exceptionHandling()

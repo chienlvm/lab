@@ -1,6 +1,5 @@
 package chienlvm.fsoft.vn.controller;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,17 +43,14 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@Value("${server.port}")
-	private int port;
 	@Value("${rootPath}")
 	private String rootPath;
 
 	private final String URL_DETAIL_BOOK = "/detail/";
 
 	@Autowired
-	public BookController(@Value("${rootPath}") String rootPath, @Value("${server.port}") int port) {
+	public BookController(@Value("${rootPath}") String rootPath) {
 		this.rootPath = rootPath;
-		this.port = port;
 	}
 
 	@RequestMapping(value = "/getListFavorite", //
@@ -62,8 +58,6 @@ public class BookController {
 			produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseData getListFavorite() throws UnknownHostException {
 		List<BookEntity> lstBook = new ArrayList<>();
-		String hostAddress = InetAddress.getLocalHost().getHostAddress();
-		String domain = "http://" + hostAddress + ":" + port + "/images/";
 		ResponseData responseData = ResponseData.create();
 		UserEntity userInfor = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Long> listBookId = bookService.getListBookIdByUserId(userInfor.getUserId());
@@ -71,8 +65,9 @@ public class BookController {
 		lstBook = bookRepository.findAllById(listBookId);
 		lstBook.forEach(item -> {
 			item.setLinkPC(URL_DETAIL_BOOK + item.getBookId());
-			item.setBookImg(domain + item.getBookImg());
-			item.setBookThumbImg(domain + item.getBookThumbImg());
+			// format : /public/static/img/${image name}
+			item.setBookImg(this.rootPath + item.getBookImg());
+			item.setBookThumbImg(this.rootPath + item.getBookThumbImg());
 		});
 		responseData.setData("data", lstBook);
 		return responseData;

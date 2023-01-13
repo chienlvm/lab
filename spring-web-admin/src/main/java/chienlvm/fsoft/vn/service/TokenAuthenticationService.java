@@ -79,7 +79,6 @@ public class TokenAuthenticationService {
 				if (!chainToken.isEmpty()) {
 					UserEntity userDetail = userRepository.findByUserName(chainToken.split("_")[1]);
 					if (tokeRequest.equals(userDetail.getAuthKey())) {
-						userDetail.setRole(1);
 						return new UsernamePasswordAuthenticationToken(userDetail, null, Collections.emptyList());
 					} else {
 						return null;

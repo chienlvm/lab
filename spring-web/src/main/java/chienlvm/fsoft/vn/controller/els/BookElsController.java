@@ -74,8 +74,6 @@ public class BookElsController {
 			consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseData getRecommendTop(@RequestBody TopPapeRequest topPapeRequest) throws UnknownHostException {
-		String hostAddress = InetAddress.getLocalHost().getHostAddress();
-		String domain = "http://" + hostAddress + ":" + port + "/images/";
 		ResponseData responseData = ResponseData.create();
 		List<String> categorys = topPapeRequest.getCategory();
 		this.setUserId();
@@ -101,8 +99,8 @@ public class BookElsController {
 						.getNewerBook(recommendTop > 0 ? recommendTop : RECOMMEND_TOP_SIZE);
 				lstBook.forEach(item -> {
 					item.setLinkPC(URL_DETAIL_BOOK + item.getBookId());
-					item.setBookImg(domain + item.getBookImg());
-					item.setBookThumbImg(domain + item.getBookThumbImg());
+					item.setBookImg(this.rootPath + item.getBookImg());
+					item.setBookThumbImg(this.rootPath + item.getBookThumbImg());
 					if (userId != null) {
 						lstBookIdFavorite.forEach(bookId -> {
 							if (bookId.equals(item.getBookId())) {
@@ -130,14 +128,17 @@ public class BookElsController {
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseData fetchByNameOrDesc(@RequestParam(required = false) String query) throws UnknownHostException {
-		String hostAddress = InetAddress.getLocalHost().getHostAddress();
-		String domain = "http://" + hostAddress + ":" + port + "/images/";
 		ResponseData responseData = ResponseData.create();
-		List<BookEls> resultSearch = bookSearchElsService.searchBookWithHighlight(query);
+		List<BookEls> resultSearch = new ArrayList<>();
+		if ("".equals(query)) {
+			resultSearch = bookSearchElsService.getNewerBook(50);
+		} else {
+			resultSearch = bookSearchElsService.searchBookWithHighlight(query);
+		}
 		resultSearch.forEach(item -> {
 			item.setLinkPC(URL_DETAIL_BOOK + item.getBookId());
-			item.setBookImg(domain + item.getBookImg());
-			item.setBookThumbImg(domain + item.getBookThumbImg());
+			item.setBookImg(this.rootPath + item.getBookImg());
+			item.setBookThumbImg(this.rootPath + item.getBookThumbImg());
 		});
 		responseData.setData("data", resultSearch);
 		return responseData;

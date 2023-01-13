@@ -70,10 +70,9 @@ public class BookController {
 		// convert public image
 		// convert time
 		// path public
-		String publicPath = "http://localhost:" + port + "/images/";
 		bookInfo.forEach(book -> {
-			book.setBookImg(publicPath + book.getBookImg());
-			book.setBookThumbImg(publicPath + book.getBookThumbImg());
+			book.setBookImg(this.rootPath + book.getBookImg());
+			book.setBookThumbImg(this.rootPath + book.getBookThumbImg());
 		});
 		response.setData("book", bookInfo);
 		return response;

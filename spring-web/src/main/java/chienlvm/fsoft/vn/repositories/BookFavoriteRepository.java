@@ -16,7 +16,7 @@ public interface BookFavoriteRepository extends JpaRepository<FavoriteBook, Long
 	int countByUserIdAndBookId(Long userId, Long bookId);
 	
 	@Query(value = "SELECT book_id FROM lab.tb_scrap where user_id =:useId ", nativeQuery = true)
-	public List<Long> getListBookIdByUserId(Long useId);
+	public List<Long> getListBookIdByUserId(@Param("useId") Long useId);
 
 	@Modifying
 	@Query(value = "DELETE FROM tb_scrap WHERE user_id = :userId and book_id=:bookId ", nativeQuery = true)

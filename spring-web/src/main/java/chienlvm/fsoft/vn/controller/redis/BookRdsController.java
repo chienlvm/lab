@@ -46,8 +46,6 @@ public class BookRdsController {
 
 	@GetMapping("{id}")
 	public ResponseData test(@PathVariable Integer id) throws UnknownHostException {
-		String hostAddress = InetAddress.getLocalHost().getHostAddress();
-		String domain = "http://" + hostAddress + ":" + port + "/images/";
 		ResponseData responseData = ResponseData.create();
 		// check bookId has exists in redis
 		Optional<BookRds> retrievedBookRds = bookRdsRepository.findById(id);
@@ -58,8 +56,8 @@ public class BookRdsController {
 			AuthorRds authorRds = BeanUtil.createAndCopy(retrievedBookRds.get().getAuthorRds(), AuthorRds.class);
 			bookrds.setAuthorRds(authorRds);
 			bookrds.setTypeBook(typeBook);
-			bookrds.setBookImg(domain + bookrds.getBookImg());
-			bookrds.setBookThumbImg(domain + bookrds.getBookThumbImg());
+			bookrds.setBookImg(this.rootPath + bookrds.getBookImg());
+			bookrds.setBookThumbImg(this.rootPath + bookrds.getBookThumbImg());
 			bookrds.setRedisMessage("Get From Redis");
 			responseData.setData("detailbook", bookrds);
 		} else {
@@ -77,8 +75,8 @@ public class BookRdsController {
 				bookrds.setBookThumbImg(bookrds.getBookThumbImg());
 				bookRdsRepository.save(bookrds);
 				// set domain for response data
-				bookrds.setBookImg(domain + bookrds.getBookImg());
-				bookrds.setBookThumbImg(domain + bookrds.getBookThumbImg());
+				bookrds.setBookImg(this.rootPath + bookrds.getBookImg());
+				bookrds.setBookThumbImg(this.rootPath + bookrds.getBookThumbImg());
 				responseData.setData("detailbook", bookrds);
 			} else {
 				responseData.setData("error", "Cuốn sách đã bị xóa");

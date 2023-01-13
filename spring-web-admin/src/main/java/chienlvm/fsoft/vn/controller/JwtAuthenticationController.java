@@ -104,6 +104,10 @@ public class JwtAuthenticationController {
 		}
 		// set response headr
 		String token = TokenAuthenticationService.AddTokenToHeader(response, useInfo);
+		if (authenticate.isAuthenticated() && useInfo.getRole() != 1) {
+			responseData.setData("error", "Bạn không có quyền truy cập");
+			return responseData;
+		}
 
 		if (authenticate.isAuthenticated()) {
 			// if login OK then set info user

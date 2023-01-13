@@ -30,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().disable().csrf().disable().authorizeRequests()
-				.antMatchers("/api/**/login", "/api/**/register", "/api/v1/authenticationToken", "/api/v1/detailbook/**", "/api/v1/top", "/images/**")
+				.antMatchers("/api/v1/login", "/api/v1/register", "/api/v1/authenticationToken",
+						"/api/v1/detailbook/**", "/api/v1/top", "/api/v1/search", "/getImage/")
 				.permitAll() //
 				.anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
