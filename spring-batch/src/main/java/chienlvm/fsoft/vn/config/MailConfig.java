@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import chienlvm.fsoft.vn.utils.MyConstants;
 @Configuration
 public class MailConfig {
 	@Bean

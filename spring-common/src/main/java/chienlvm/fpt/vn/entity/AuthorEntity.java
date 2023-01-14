@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_book_author", //
+@Table(name = "TB_BOOK_AUTHOR", //
 		uniqueConstraints = { //
 				@UniqueConstraint(name = "AUTHOR_ID", columnNames = { "AUTHOR_ID" }) })
 public class AuthorEntity {

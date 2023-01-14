@@ -1,7 +1,5 @@
 package chienlvm.fsoft.vn.controller.redis;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +31,16 @@ public class BookRdsController {
 	private BookRdsRepository bookRdsRepository;
 	@Autowired
 	private BookRepository bookRepository;
-	@Value("${server.port}")
-	private int port;
 	@Value("${rootPath}")
 	private String rootPath;
 
 	@Autowired
-	public BookRdsController(@Value("${rootPath}") String rootPath, @Value("${server.port}") int port) {
+	public BookRdsController(@Value("${rootPath}") String rootPath) {
 		this.rootPath = rootPath;
-		this.port = port;
 	}
 
 	@GetMapping("{id}")
-	public ResponseData test(@PathVariable Integer id) throws UnknownHostException {
+	public ResponseData test(@PathVariable Integer id) {
 		ResponseData responseData = ResponseData.create();
 		// check bookId has exists in redis
 		Optional<BookRds> retrievedBookRds = bookRdsRepository.findById(id);
@@ -79,7 +74,7 @@ public class BookRdsController {
 				bookrds.setBookThumbImg(this.rootPath + bookrds.getBookThumbImg());
 				responseData.setData("detailbook", bookrds);
 			} else {
-				responseData.setData("error", "Cuốn sách đã bị xóa");
+				responseData.setData("error", "Book have delete");
 			}
 		}
 		return responseData;

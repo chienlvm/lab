@@ -20,7 +20,6 @@ public class BookElsRowMapper implements RowMapper<BookEls> {
 		TypeBook typeBook = new TypeBook();
 		typeBook.setTypeBookId(rs.getLong("TYPE_BOOK_ID"));
 		typeBook.setTypeBookName(rs.getString("TYPE_BOOK_NAME"));
-		
 		lstBook.setBookId(rs.getLong("BOOK_ID"));
 		lstBook.setAuthor(author);
 		lstBook.setDelF(rs.getString("DEL_F"));
@@ -31,23 +30,7 @@ public class BookElsRowMapper implements RowMapper<BookEls> {
 		lstBook.setTypeBook(typeBook);
 		lstBook.setPublicYear(rs.getDate("PUBLISH_YEAR"));
 		lstBook.setCreateDt(rs.getDate("CRT_DT"));
-		
-//		private Long bookId;
-//		private String bookName;
-//		private String bookDescribe;
-//		private String delF;
-//		private String bookImg;
-//		private String bookThumbImg;
-//		private Author author;
-//		private TypeBook typeBook;
-		
-//		try {
-//			lstBook.setScrapDt(DT_FORMAT.parse(rs.getString("scrap_dt")));
-//		} catch (ParseException | SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		return lstBook;
-		// @formatter:on
 	}
 }

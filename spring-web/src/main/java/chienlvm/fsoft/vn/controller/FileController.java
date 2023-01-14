@@ -14,27 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/getImage")
+@RequestMapping(value = "/getImage/")
 public class FileController {
 
-	@Value("${rootPath}")
-	private String rootPath;
+	@Value("${publicPath}")
+	private String publicPath;
 
 	@Autowired
-	public FileController(@Value("${rootPath}") String rootPath) {
-		this.rootPath = rootPath;
+	public FileController(@Value("${publicPath}") String publicPath) {
+		this.publicPath = publicPath;
 	}
 
 	@GetMapping("/{filename}")
 	public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
 		byte[] image = new byte[0];
 		try {
-			File uploadRootDir = new File(rootPath + filename);
+			File uploadRootDir = new File(this.publicPath + filename);
 			if (!uploadRootDir.exists()) {
 				// image 404
-				image = FileUtils.readFileToByteArray(new File(rootPath + "404.jpg"));
+				image = FileUtils.readFileToByteArray(new File(this.publicPath + "404.jpg"));
 			} else {
-				image = FileUtils.readFileToByteArray(new File(rootPath + filename));
+				image = FileUtils.readFileToByteArray(new File(this.publicPath + filename));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

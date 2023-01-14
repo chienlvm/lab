@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,28 +36,26 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserRepository userRepositiory;
 
-	@SuppressWarnings("unused")
 	@RequestMapping(value = "/authenticationToken", method = RequestMethod.POST)
 	public ResponseData authenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		ResponseData responseData = ResponseData.create();
 		String tokenRequest = authenticationRequest.getToken();
-		if ("".equals(tokenRequest) || tokenRequest == null | authenticationRequest == null) {
+		if ("".equals(tokenRequest) || tokenRequest == null) {
 			responseData.setData("error", "Lỗi xác thực");
 			return responseData;
 		}
 		// token prefix
-		String tokenPrefix = TokenUtils.getPrefixFromToken(tokenRequest);
-		String tokenPrefixDecode = TokenUtils.prefixDecode(tokenPrefix);
 		// token decode
 		String tokeDecode = TokenUtils.decodeToken(tokenRequest);
 		// get user from token
 		UserEntity userDetail = userRepositiory.findByUserName(tokeDecode.split("_")[1]);
-
+		tokenRequest = tokenRequest.substring(tokenRequest.indexOf(".") + 1, tokenRequest.length());
 		if (tokenRequest.equals(userDetail.getAuthKey())) {
-			Authentication authenticate = new UsernamePasswordAuthenticationToken(userDetail, null, Collections.emptyList());
+			new UsernamePasswordAuthenticationToken(userDetail, null, Collections.emptyList());
 			responseData.setData("isLogin", true);
 			responseData.setData("accountSetting", userDetail);
 		} else {
+			new UsernamePasswordAuthenticationToken(null, null);
 			responseData.setData("error", "Lỗi xác thực");
 		}
 		return responseData;
@@ -159,6 +158,13 @@ public class JwtAuthenticationController {
 			UserEntity result = userRepositiory.save(userData);
 			responseData.setData("data", result);
 		}
+		return responseData;
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ResponseData logout() throws Exception {
+		ResponseData responseData = ResponseData.create();
+		SecurityContextHolder.getContext().setAuthentication(null);
 		return responseData;
 	}
 }

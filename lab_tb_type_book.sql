@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_type_book`
+-- Table structure for table `TB_TYPE_BOOK`
 --
 
-DROP TABLE IF EXISTS `tb_type_book`;
+DROP TABLE IF EXISTS `TB_TYPE_BOOK`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tb_type_book` (
+CREATE TABLE `TB_TYPE_BOOK` (
   `TYPE_BOOK_ID` bigint NOT NULL AUTO_INCREMENT,
   `TYPE_BOOK_NAME` text COLLATE utf8mb3_unicode_ci NOT NULL,
   `DEL_F` bigint DEFAULT '0',
@@ -35,13 +35,13 @@ CREATE TABLE `tb_type_book` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_type_book`
+-- Dumping data for table `TB_TYPE_BOOK`
 --
 
-LOCK TABLES `tb_type_book` WRITE;
-/*!40000 ALTER TABLE `tb_type_book` DISABLE KEYS */;
-INSERT INTO `tb_type_book` VALUES (14,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:58',NULL),(15,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(16,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(17,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(18,'gzxczxcx',0,NULL,NULL,'2022-12-25 18:00:00',NULL),(19,'Ngôn tình',0,NULL,NULL,'2023-01-02 23:20:48',NULL),(20,'zzzzzzzzzz',0,NULL,NULL,'2023-01-02 23:21:27',NULL),(21,'zzzzzzzzzz',0,NULL,NULL,'2023-01-02 23:21:46',NULL),(22,'ngôn tình',0,NULL,NULL,'2023-01-02 23:21:54',NULL),(23,'ngôn tình23444',0,NULL,NULL,'2023-01-02 23:24:20','2023-01-02 23:25:26');
-/*!40000 ALTER TABLE `tb_type_book` ENABLE KEYS */;
+LOCK TABLES `TB_TYPE_BOOK` WRITE;
+/*!40000 ALTER TABLE `TB_TYPE_BOOK` DISABLE KEYS */;
+INSERT INTO `TB_TYPE_BOOK` VALUES (14,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:58',NULL),(15,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(16,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(17,'gzxczxcx',0,NULL,NULL,'2022-12-25 17:59:59',NULL),(18,'gzxczxcx',0,NULL,NULL,'2022-12-25 18:00:00',NULL),(19,'Ngôn tình',0,NULL,NULL,'2023-01-02 23:20:48',NULL),(20,'zzzzzzzzzz',0,NULL,NULL,'2023-01-02 23:21:27',NULL),(21,'zzzzzzzzzz',0,NULL,NULL,'2023-01-02 23:21:46',NULL),(22,'ngôn tình',0,NULL,NULL,'2023-01-02 23:21:54',NULL),(23,'ngôn tình23444',0,NULL,NULL,'2023-01-02 23:24:20','2023-01-02 23:25:26');
+/*!40000 ALTER TABLE `TB_TYPE_BOOK` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

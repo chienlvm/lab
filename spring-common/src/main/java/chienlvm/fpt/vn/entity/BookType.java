@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 
 @Entity
-@Table(name = "tb_type_book", //
+@Table(name = "TB_TYPE_BOOK", //
 		uniqueConstraints = { //
 				@UniqueConstraint(name = "TYPE_BOOK_ID", columnNames = { "TYPE_BOOK_ID" }) })
 public class BookType {
