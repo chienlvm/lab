@@ -101,20 +101,6 @@ public class BatchElsConfiguration {
 		};
 	}
 
-	/*-------------------------------------------------------------------------------------*/
-	@Bean
-	public Step importBookToEls(StepBuilderFactory stepBuilderFactory, ItemWriter<BookEls> BookElsItemWriter) {
-		return stepBuilderFactory.get("importBookToEls").<BookEls, BookEls>chunk(100).reader(getBookItemReader())
-				.writer(BookElsItemWriter).build();
-	}
-
-	@Bean
-	public Job job(JobBuilderFactory jobBuilderFactory, Step importBookToEls) {
-		logger.info("-------START BATCH IMPORT BOOK-------");
-		return jobBuilderFactory.get("job").incrementer(new RunIdIncrementer()).start(importBookToEls).build();
-	}
-	/*-------------------------------------------------------------------------------------*/
-
 	@Bean
 	public JdbcPagingItemReader<MailEntity> pagingItemReader() {
 		// step 1: get userId has favorite 10 book
@@ -278,4 +264,17 @@ public class BatchElsConfiguration {
 		return stepBuilderFactory.get("step1").<MailEntity, MailEntity>chunk(999999).reader(pagingItemReader())
 				.processor(processor()).writer(customerItemWriter()).build();
 	}
+	/*-------------------------------------------------------------------------------------*/
+	@Bean
+	public Step importBookToEls(StepBuilderFactory stepBuilderFactory, ItemWriter<BookEls> BookElsItemWriter) {
+		return stepBuilderFactory.get("importBookToEls").<BookEls, BookEls>chunk(100).reader(getBookItemReader())
+				.writer(BookElsItemWriter).build();
+	}
+
+	@Bean
+	public Job importBookToEls(JobBuilderFactory jobBuilderFactory, Step importBookToEls) {
+		logger.info("-------START BATCH IMPORT BOOK-------");
+		return jobBuilderFactory.get("job").incrementer(new RunIdIncrementer()).start(importBookToEls).build();
+	}
+	/*-------------------------------------------------------------------------------------*/
 }

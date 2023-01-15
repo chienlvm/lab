@@ -244,7 +244,7 @@ public class BookController {
 			BookEntity book = bookInfo.get();
 			book.setDelF(Long.valueOf(1));
 			book.setDelDt(new Date());
-			bookRepository.save(book);
+			bookRepository.deleteById(book.getBookId());
 		} catch (Exception e) {
 			responseData.setData("error", "Sách này đã bị xóa");
 			return responseData;
