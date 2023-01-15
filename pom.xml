@@ -4,8 +4,8 @@
     <artifactId>r7-tech</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>r7-tech</name>
-    <description>r7-tech</description>
+    <name>techL</name>
+    <description>techL</description>
 
 
     <parent>
