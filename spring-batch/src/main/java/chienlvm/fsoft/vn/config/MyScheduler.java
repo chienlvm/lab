@@ -22,20 +22,21 @@ public class MyScheduler {
 
 	@Autowired
 	private JobLauncher jobLauncher;
+	@Autowired
+	@Qualifier("job")
+	private Job job;
 	
 	@Autowired
-	@Qualifier(value = "importBookToEls")
-	private Job fetchEls;
+	@Qualifier("sendMail")
+	private Job sendMail;
 	
-	@Autowired
-	@Qualifier(value = "sendMail")
-	private Job aaa;
+	
 	@Scheduled(cron="*/10 * * * * *")
 	public void myScheduler(){
 		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
 		
 		try {
-			JobExecution jobExecution = jobLauncher.run(fetchEls, jobParameters);
+			JobExecution jobExecution = jobLauncher.run(job, jobParameters);
 			System.out.println("Job's Status fetchEls :::"+jobExecution.getStatus());
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException
 				| JobParametersInvalidException e) {
@@ -44,12 +45,12 @@ public class MyScheduler {
 	}
 	
 	@Scheduled(cron="*/10 * * * * *")
-	public void sendMail(){
+	public void myScheduler2(){
 		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
 		
 		try {
-			JobExecution jobExecution = jobLauncher.run(aaa, jobParameters);
-			System.out.println("Job's Status sendMail:::"+jobExecution.getStatus());
+			JobExecution jobExecution = jobLauncher.run(sendMail, jobParameters);
+			System.out.println("Job's Status sendMail :::"+jobExecution.getStatus());
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException
 				| JobParametersInvalidException e) {
 			e.printStackTrace();

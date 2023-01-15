@@ -25,6 +25,7 @@ import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -253,6 +254,7 @@ public class BatchElsConfiguration {
 	}
 
 	@Bean
+	@Qualifier("sendMail")
 	public Job sendMail() throws Exception {
 		logger.info("-------START BATCH SEND MAIL-------");
 		return jobBuilderFactory.get("sendMail").incrementer(new RunIdIncrementer())
@@ -272,7 +274,8 @@ public class BatchElsConfiguration {
 	}
 
 	@Bean
-	public Job importBookToEls(JobBuilderFactory jobBuilderFactory, Step importBookToEls) {
+	@Qualifier("job")
+	public Job job(JobBuilderFactory jobBuilderFactory, Step importBookToEls) {
 		logger.info("-------START BATCH IMPORT BOOK-------");
 		return jobBuilderFactory.get("job").incrementer(new RunIdIncrementer()).start(importBookToEls).build();
 	}
